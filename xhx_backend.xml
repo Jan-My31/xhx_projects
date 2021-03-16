@@ -1,0 +1,10 @@
+<uwsgi>
+   <socket>127.0.0.1:9999</socket><!-- 内部端口，自定义 -->
+   <chdir>/home/xhx_projects/xhx_backend/</chdir><!-- 项目路径 -->
+   <module>xhx_backend.wsgi</module>
+   <processes>10</processes> <!-- 进程数 -->
+   <daemonize>uwsgi.log</daemonize><!-- 日志文件 -->
+</uwsgi>
+
+
+

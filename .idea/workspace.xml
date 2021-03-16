@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="ced170e4-2b24-4a34-9017-1638b4ccc60a" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1nhbsrkFt5KhRfyzB2VXY6dgqIM" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortByType" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/xhx_backend" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/xhx_backend/users" />
+      <recent name="$PROJECT_DIR$/xhx_backend" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.cg_list_second">
+    <configuration name="cg_95306_login" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xhx_projects" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.conda/envs/xhx_projects/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cg_spider" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cg_spider/cg_95306_login.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="cg_list_second" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xhx_projects" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/cg_spider" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cg_spider/cg_list_second.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="tb_main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xhx_projects" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tb_crawl" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tb_crawl/tb_main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xhx_projects" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tb_crawl" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/tb_crawl/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="xhx_crawl_main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="xhx_projects" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/xhx_crawl" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/xhx_crawl/xhx_crawl_main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.cg_list_second" />
+        <item itemvalue="Python.xhx_crawl_main" />
+        <item itemvalue="Python.cg_95306_login" />
+        <item itemvalue="Python.tb_main" />
+        <item itemvalue="Python.test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ced170e4-2b24-4a34-9017-1638b4ccc60a" name="Default Changelist" comment="" />
+      <created>1611845479751</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1611845479751</updated>
+      <workItem from="1611845481256" duration="195000" />
+      <workItem from="1611846019257" duration="2666000" />
+      <workItem from="1611881717247" duration="17745000" />
+      <workItem from="1611966258087" duration="11645000" />
+      <workItem from="1612020587970" duration="12298000" />
+      <workItem from="1612100687975" duration="2381000" />
+      <workItem from="1612104017488" duration="727000" />
+      <workItem from="1612105087352" duration="485000" />
+      <workItem from="1614131168768" duration="12873000" />
+      <workItem from="1614145549673" duration="29983000" />
+      <workItem from="1614241123924" duration="9000" />
+      <workItem from="1614766311118" duration="2233000" />
+      <workItem from="1615042326368" duration="704000" />
+      <workItem from="1615167482335" duration="249000" />
+      <workItem from="1615875368347" duration="477000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="362" y="44" key="#Deployment" timestamp="1614181656402">
+      <screen x="46" y="23" width="1234" height="777" />
+    </state>
+    <state x="362" y="44" key="#Deployment/46.23.1234.777@46.23.1234.777" timestamp="1614181656402" />
+    <state x="416" y="78" key="#Options" timestamp="1614181157316">
+      <screen x="46" y="23" width="1234" height="777" />
+    </state>
+    <state x="416" y="78" key="#Options/46.23.1234.777@46.23.1234.777" timestamp="1614181157316" />
+    <state x="366" y="24" key="#cg_95306_login" timestamp="1614766329104">
+      <screen x="50" y="23" width="1230" height="777" />
+    </state>
+    <state x="366" y="24" key="#cg_95306_login/50.23.1230.777@50.23.1230.777" timestamp="1614766329104" />
+    <state width="1186" height="287" key="GridCell.Tab.0.bottom" timestamp="1614819865425">
+      <screen x="50" y="23" width="1230" height="777" />
+    </state>
+    <state width="1863" height="188" key="GridCell.Tab.0.bottom/47.23.1233.697@47.23.1233.697" timestamp="1612094010688" />
+    <state width="1863" height="252" key="GridCell.Tab.0.bottom/47.23.1233.777@47.23.1233.777" timestamp="1612099357010" />
+    <state width="1863" height="252" key="GridCell.Tab.0.bottom/49.23.1231.777@49.23.1231.777" timestamp="1612100683324" />
+    <state width="1186" height="287" key="GridCell.Tab.0.bottom/50.23.1230.777@50.23.1230.777" timestamp="1614819865425" />
+    <state width="1863" height="303" key="GridCell.Tab.0.bottom/50.23.2510.1417@50.23.2510.1417" timestamp="1612091743211" />
+    <state width="1186" height="287" key="GridCell.Tab.0.center" timestamp="1614819865424">
+      <screen x="50" y="23" width="1230" height="777" />
+    </state>
+    <state width="1863" height="188" key="GridCell.Tab.0.center/47.23.1233.697@47.23.1233.697" timestamp="1612094010687" />
+    <state width="1863" height="252" key="GridCell.Tab.0.center/47.23.1233.777@47.23.1233.777" timestamp="1612099357009" />
+    <state width="1863" height="252" key="GridCell.Tab.0.center/49.23.1231.777@49.23.1231.777" timestamp="1612100683315" />
+    <state width="1186" height="287" key="GridCell.Tab.0.center/50.23.1230.777@50.23.1230.777" timestamp="1614819865424" />
+    <state width="1863" height="303" key="GridCell.Tab.0.center/50.23.2510.1417@50.23.2510.1417" timestamp="1612091743210" />
+    <state width="1186" height="287" key="GridCell.Tab.0.left" timestamp="1614819865423">
+      <screen x="50" y="23" width="1230" height="777" />
+    </state>
+    <state width="1863" height="188" key="GridCell.Tab.0.left/47.23.1233.697@47.23.1233.697" timestamp="1612094010686" />
+    <state width="1863" height="252" key="GridCell.Tab.0.left/47.23.1233.777@47.23.1233.777" timestamp="1612099357009" />
+    <state width="1863" height="252" key="GridCell.Tab.0.left/49.23.1231.777@49.23.1231.777" timestamp="1612100683302" />
+    <state width="1186" height="287" key="GridCell.Tab.0.left/50.23.1230.777@50.23.1230.777" timestamp="1614819865423" />
+    <state width="1863" height="303" key="GridCell.Tab.0.left/50.23.2510.1417@50.23.2510.1417" timestamp="1612091743209" />
+    <state width="1186" height="287" key="GridCell.Tab.0.right" timestamp="1614819865424">
+      <screen x="50" y="23" width="1230" height="777" />
+    </state>
+    <state width="1863" height="188" key="GridCell.Tab.0.right/47.23.1233.697@47.23.1233.697" timestamp="1612094010687" />
+    <state width="1863" height="252" key="GridCell.Tab.0.right/47.23.1233.777@47.23.1233.777" timestamp="1612099357010" />
+    <state width="1863" height="252" key="GridCell.Tab.0.right/49.23.1231.777@49.23.1231.777" timestamp="1612100683320" />
+    <state width="1186" height="287" key="GridCell.Tab.0.right/50.23.1230.777@50.23.1230.777" timestamp="1614819865424" />
+    <state width="1863" height="303" key="GridCell.Tab.0.right/50.23.2510.1417@50.23.2510.1417" timestamp="1612091743210" />
+    <state width="1186" height="461" key="GridCell.Tab.1.bottom" timestamp="1612020584161">
+      <screen x="50" y="23" width="2510" height="1417" />
+    </state>
+    <state width="1186" height="461" key="GridCell.Tab.1.bottom/50.23.2510.1417@50.23.2510.1417" timestamp="1612020584161" />
+    <state width="1186" height="461" key="GridCell.Tab.1.center" timestamp="1612020584160">
+      <screen x="50" y="23" width="2510" height="1417" />
+    </state>
+    <state width="1186" height="461" key="GridCell.Tab.1.center/50.23.2510.1417@50.23.2510.1417" timestamp="1612020584160" />
+    <state width="1186" height="461" key="GridCell.Tab.1.left" timestamp="1612020584159">
+      <screen x="50" y="23" width="2510" height="1417" />
+    </state>
+    <state width="1186" height="461" key="GridCell.Tab.1.left/50.23.2510.1417@50.23.2510.1417" timestamp="1612020584159" />
+    <state width="1186" height="461" key="GridCell.Tab.1.right" timestamp="1612020584160">
+      <screen x="50" y="23" width="2510" height="1417" />
+    </state>
+    <state width="1186" height="461" key="GridCell.Tab.1.right/50.23.2510.1417@50.23.2510.1417" timestamp="1612020584160" />
+    <state x="200" y="47" width="976" height="722" key="SettingsEditor" timestamp="1615875905589">
+      <screen x="54" y="23" width="1226" height="777" />
+    </state>
+    <state x="257" y="42" key="SettingsEditor/43.23.1237.777@43.23.1237.777" timestamp="1614218647185" />
+    <state x="259" y="42" width="976" height="722" key="SettingsEditor/46.23.1234.777@46.23.1234.777" timestamp="1614181476123" />
+    <state x="193" y="47" key="SettingsEditor/47.23.1233.777@47.23.1233.777" timestamp="1614148774483" />
+    <state x="195" y="47" key="SettingsEditor/49.23.1231.777@49.23.1231.777" timestamp="1612103079069" />
+    <state x="196" y="47" key="SettingsEditor/50.23.1230.777@50.23.1230.777" timestamp="1614766352555" />
+    <state x="200" y="47" key="SettingsEditor/54.23.1226.777@54.23.1226.777" timestamp="1615875905589" />
+    <state x="280" y="241" key="com.intellij.ide.util.TipDialog" timestamp="1615167726163">
+      <screen x="50" y="23" width="1230" height="777" />
+    </state>
+    <state x="280" y="241" key="com.intellij.ide.util.TipDialog/50.23.1230.777@50.23.1230.777" timestamp="1615167726163" />
+    <state x="758" y="146" key="ftp.server.browser" timestamp="1614181633237">
+      <screen x="46" y="23" width="1234" height="777" />
+    </state>
+    <state x="758" y="146" key="ftp.server.browser/46.23.1234.777@46.23.1234.777" timestamp="1614181633237" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/xhx_projects$cg_95306_login.coverage" NAME="cg_95306_login Coverage Results" MODIFIED="1614766397367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cg_spider" />
+    <SUITE FILE_PATH="coverage/xhx_projects$tb_main.coverage" NAME="tb_main Coverage Results" MODIFIED="1612104431145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tb_crawl" />
+    <SUITE FILE_PATH="coverage/xhx_projects$test.coverage" NAME="test Coverage Results" MODIFIED="1612019106902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tb_crawl" />
+    <SUITE FILE_PATH="coverage/xhx_projects$xhx_crawl_main.coverage" NAME="xhx_crawl_main Coverage Results" MODIFIED="1614775459094" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/xhx_crawl" />
+    <SUITE FILE_PATH="coverage/xhx_projects$cg_list_second.coverage" NAME="cg_list_second Coverage Results" MODIFIED="1614776333231" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/cg_spider" />
+  </component>
+</project>

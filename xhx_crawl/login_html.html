@@ -1,0 +1,1207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="x-ua-compatible" content="ie=7"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>中国铁路郑州局集团有限公司物资采购商务平台</title>
+    <base href="http://m.ztwz.com:80/"/>
+    <meta http-equiv="keywords" content="铁路物资采购商务平台,中国铁路物资采购商务平台,中国铁路总公司物资采购商务平台"/>
+    <meta http-equiv="description" content="中国铁路郑州局集团有限公司物资采购商务平台"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jQuery/jquery.artDialog.js?skin=aero"></script>
+    <script type="text/javascript" src="js/check.js"></script>
+    <script type="text/javascript" src="js/MD5.js"></script>
+    <link rel="stylesheet" rev="stylesheet" href="css/n0503/main.css" type="text/css" media="all"/>
+    <LINK rel="stylesheet" rev="stylesheet" href="css/n0503/main_orange.css" type="text/css" media="all">
+    <style type="text/css"></style>
+    <script type="text/javascript">
+        var fixTime = (1612507292171 - (new Date()).getTime());
+        var mainDate = new Date();
+
+        //switch notice menu
+        function browerNoticeList(obj, id, order) {
+            if (!$(obj).hasClass("secondSubMenuActive")) {
+                $(obj).parent().children(".secondSubMenuActive").removeClass("secondSubMenuActive").addClass("secondSubMenu");
+                $(obj).removeClass("secondSubMenu").addClass("secondSubMenuActive");
+                for (var p = 1; p <= 3; p++) {
+                    if (!$("#" + id + p).hasClass("none")) {
+                        $("#" + id + p).addClass("none");
+                        break;
+                    }
+                }
+                $("#" + id + order).removeClass("none");
+            }
+        }
+
+        function loaduser() {
+            var pass = $('#userPassword').val();
+            if (pass == "") {
+                alert("您还未输入密码，请填写正确的密码后登录！");
+                return;
+            }
+            if (!/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*,.]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*,.]+$)(?![\d!@#$%^&*,.]+$)[a-zA-Z\d!@#$%^&*,.]+$/.exec(pass) || pass.length < 8) {
+                art.dialog({
+                    id: "_index_passcheck",
+                    title: "弱口令提示",
+                    content: '<div class=\"floatArtDialog\"><div class=\"artPbox\">系统检测出您在用户登录时输入的密码强度过低，为了保护您的账号安全，请登录国铁采购平台重置密码后，再尝试登录本系统。</div></div>',
+                    button:
+                        [{
+                            name: "确认修改",
+                            callback:
+                                function () {
+                                    return window.location.href = "https://cg.95306.cn/passport/forgetpwd";
+                                }
+                        },
+                            {
+                                name: "继续登录",
+                                callback: function () {
+                                    if (!isloadUser($('#userAccount').val(), '用户名', 'userAccount')) {
+                                    } else {
+                                        showPopVertifyMenu("输入验证码登录",
+                                            "<div class=\"floatArtDialog\"><div class=\"captcha\"><span style=\"font-size:15px;\">请输入验证码：</span><input type=\"text\" name=\"captcha\" id=\"captcha\" class=\"input52\" maxlength=\"4\"/><img id=\"captchaImg\" src=\"/captcha.do?id=" + ((new Date().getTime() + 1).toString(36)) + "\"/><a href=\"javascript:getCaptcha();\">看不清，换一张</a></div><div class=\"artPbox\">提示：请根据验证码图片输入正确的数字或字母。</div></div>"
+                                            , true);
+                                    }
+                                }
+                            },
+                            {
+                                name: "重新输入",
+                                callback: function () {
+                                    $("#userPassword").val("");
+                                }
+                            }]
+                });
+            } else {
+                if (!isloadUser($('#userAccount').val(), '用户名', 'userAccount')) {
+                } else {
+                    showPopVertifyMenu("输入验证码登录",
+                        "<div class=\"floatArtDialog\"><div class=\"captcha\"><span style=\"font-size:15px;\">请输入验证码：</span><input type=\"text\" name=\"captcha\" id=\"captcha\" class=\"input52\" maxlength=\"4\"/><img id=\"captchaImg\" src=\"/captcha.do?id=" + ((new Date().getTime() + 1).toString(36)) + "\"/><a href=\"javascript:getCaptcha();\">看不清，换一张</a></div><div class=\"artPbox\">提示：请根据验证码图片输入正确的数字或字母。</div></div>"
+                        , true);
+                }
+            }
+
+        }
+
+        function showPopVertifyMenu(v_title, v_contents, b_show, v_id) {
+            var strContent = v_contents || "";
+            var strId = v_id || "_index_vertify";
+            art.dialog({
+                id: strId,
+                title: v_title,
+                lock: true,
+                fixed: true,
+                background: '#666', // 背景色
+                opacity: 0.87,	// 透明度
+                resize: false,
+                show: false,
+                cancel: true,
+                button: {
+                    name: "确认", disable: false, callback: function () {
+                        return loadLoginuser();
+                    }
+                }
+            });
+            if (strContent != "") {
+                art.dialog({id: strId}).content(v_contents);
+            }
+            if (b_show || false) {
+                art.dialog({id: strId}).position(($(document).width() / 2 > 180) ? $(document).width() / 2 - 180 : 0, 200).show();
+            }
+        }
+
+        function getCaptcha() {
+            $("#captchaImg").attr("src", "captcha.do?id=" + ((new Date().getTime()).toString(36)));
+        }
+
+        function loadLoginuser() {
+            resetPass();
+            $("#captchaCode").val($("#saltValue").val() + $("#captcha").val() + $('#userSession').val());
+            document.userform.action = "/Login.do";
+            document.userform.submit();
+        }
+
+        function loadKey() {
+            var pass = $('#userPassword').val();
+            if (pass == "") {
+                alert("您还未输入密码，请填写正确的密码后登录！");
+                return;
+            }
+            if (!/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*,.]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*,.]+$)(?![\d!@#$%^&*,.]+$)[a-zA-Z\d!@#$%^&*,.]+$/.exec(pass) || pass.length < 8) {
+                art.dialog({
+                    id: "_index_passcheck",
+                    title: "弱口令提示",
+                    content: '<div class=\"floatArtDialog\"><div class=\"artPbox\">系统检测出您在用户登录时输入的密码强度过低，为了保护您的账号安全，请登录国铁采购平台重置密码后，再尝试登录本系统。</div></div>',
+                    button:
+                        [{
+                            name: "确认修改",
+                            callback:
+                                function () {
+                                    return window.location.href = "https://cg.95306.cn/passport/forgetpwd";
+                                }
+                        },
+                            {
+                                name: "继续登录",
+                                callback: function () {
+                                    if (!isloadUser($('#userAccount').val(), '用户名', 'userAccount')) {
+                                    } else {
+                                        var iRtn = CSCertHandle.SignData($('#userSession').val());
+                                        if (iRtn == 0) {
+                                            $('#keyValue').val(CSCertHandle.GetSignedDataExt());
+                                            resetPass();
+                                            document.userform.action = "/Login.do?key=1";
+                                            document.userform.submit();
+                                        } else {
+                                            alert("证书校验失败，错误代码为【" + iRtn + "】，错误描述为【" + CSCertHandle.GetMessage(iRtn) + "】。请重新尝试或者与管理员联系！");
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                name: "重新输入",
+                                callback: function () {
+                                    $("#userPassword").val("");
+                                }
+                            }]
+                });
+            } else {
+                if (!isloadUser($('#userAccount').val(), '用户名', 'userAccount')) {
+                } else {
+                    var iRtn = CSCertHandle.SignData($('#userSession').val());
+                    if (iRtn == 0) {
+                        $('#keyValue').val(CSCertHandle.GetSignedDataExt());
+                        resetPass();
+                        document.userform.action = "/Login.do?key=1";
+                        document.userform.submit();
+                    } else {
+                        alert("证书校验失败，错误代码为【" + iRtn + "】，错误描述为【" + CSCertHandle.GetMessage(iRtn) + "】。请重新尝试或者与管理员联系！");
+                    }
+                }
+            }
+        }
+
+        function loadRnd() {
+            if (!isloadUser($('#userAccount').val(), '用户名', 'userAccount')) {
+            } else {
+                var ok = true;
+                if ($('#code1').val() == "" || !/^\d{3}$/.exec($('#code1').val())) {
+                    $('#code1').val("").focus();
+                    ok = false;
+                }
+                if (ok && ($('#code2').val() == "" || !/^\d{3}$/.exec($('#code2').val()))) {
+                    $('#code2').val("").focus();
+                    ok = false;
+                }
+                if (ok && ($('#code3').val() == "" || !/^\d{3}$/.exec($('#code3').val()))) {
+                    $('#code3').val("").focus();
+                    ok = false;
+                }
+                if (ok) {
+                    resetPass();
+                    $("#rndCode").val(hex_md5_wz($("#saltValue").val() + $('#code1').val() + $('#code2').val() + $('#code3').val() + $('#userSession').val()));
+                    document.userform.action = "/Login.do?key=2";
+                    document.userform.submit();
+                    return false;
+                } else {
+                    alert("随机码有误，请重新输入。");
+                    return false;
+                }
+            }
+        }
+
+        //弱口令校验
+        function weakPassCheck() {
+            var pass = $('#userPassword').val();
+            if (!/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*,.]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*,.]+$)(?![\d!@#$%^&*,.]+$)[a-zA-Z\d!@#$%^&*,.]+$/.exec(pass) || pass.length < 8) {
+                showPassCheck("弱口令提示", "<div class=\"floatArtDialog\"><div class=\"artPbox\">系统检测出您在用户登录时输入的密码强度过低，为了保护您的账号安全，请登录国铁采购平台重置密码后，再尝试登录本系统。</div></div>", true);
+                return false;
+            } else {
+                return true;
+            }
+
+        }
+
+        function showPassCheck(v_title, v_contents, b_show, v_id) {
+            var strContent = v_contents || "";
+            var strId = v_id || "_index_passcheck";
+            art.dialog({
+                id: strId,
+                title: v_title,
+                lock: true,
+                fixed: true,
+                background: '#666', // 背景色
+                opacity: 0.87,	// 透明度
+                resize: false,
+                show: false,
+                cancel: function () {
+                    $("#userPassword").val("")
+                },
+                button: [{
+                    name: "确认修改", disable: false, callback: function () {
+                        return window.location.href = "https://cg.95306.cn/passport/forgetpwd";
+                    },
+                    name: "继续登录", disable: false, callback: function () {
+                        return true;
+                    },
+                    name: "重新输入", disable: false, callback: function () {
+                        $("#userPassword").val("");
+                    }
+                }]
+            });
+            if (strContent != "") {
+                art.dialog({id: strId}).content(v_contents);
+            }
+            if (b_show || false) {
+                art.dialog({id: strId}).position(($(document).width() / 2 > 180) ? $(document).width() / 2 - 180 : 0, 200).show();
+            }
+        }
+
+        function resetPass() {
+            $('#userPassword').val(hex_md5_wz($('#userPassword').val()));
+        }
+
+        function updateTime(fixValue) {
+            mainDate.setTime((new Date().getTime()) + fixTime);
+            $('#jnkc').html('<span>' + mainDate.getFullYear() + '年 ' + (mainDate.getMonth() + 1) + '月' + mainDate.getDate() + '日' + '&nbsp;&nbsp;星期' + '日一二三四五六'.charAt(mainDate.getDay()) + '&nbsp;&nbsp;' + mainDate.getHours() + '时' + mainDate.getMinutes() + '分' + '</span>');
+        }
+
+        function tj() {
+            document.getElementById('form_ss').action = 'indexSearch.do';
+            var ss = document.indexSearch.keyword.value;
+            if (ss == '请输入关键字') {
+                document.indexSearch.keyword.value = '';
+                alert('请输入关键字');
+            } else if (trim(ss) == '') {
+                document.indexSearch.keyword.value = '';
+                alert('请输入关键字');
+            } else {
+                document.indexSearch.submit();
+            }
+        }
+
+        function erase(q) {
+            if (q.value == '请输入关键字') q.value = '';
+        }
+
+        function tjhot(i) {
+
+        };
+        $(document).ready(function () {
+            updateTime(fixTime);
+            setInterval("updateTime(fixTime);", 1000);
+            $("#userSafeHelp").mouseover(function () {
+                $("#level2Id").data("show", "1");
+                $("#level2Id").show();
+            });
+            $("#level2Id").mouseleave(function () {
+                if ($("#level2Id").data("show") == "1") {
+                    $("#level2Id").data("show", "0");
+                    $("#level2Id").hide();
+                }
+            });
+            $("html").click(function () {
+                if ($("#level2Id").data("show") == "1") {
+                    $("#level2Id").data("show", "0");
+                    $("#level2Id").hide();
+                }
+            });
+            $(".loginBtn").click(function () {
+                var c = $("#userLoadStyle").val();
+                switch (c) {
+                    case "0":
+                        loaduser();
+                        break;
+                    case "1":
+                        loadKey();
+                        break;
+                    case "2":
+                        popRndMenu();
+                        break;
+                    default:
+                        return false;
+                }
+            });
+            $("#code1").live({
+                keydown: function () {
+                    if (/^\d{3}$/.exec($('#code1').val())) {
+                        $('#code2').focus();
+                    }
+                }, keyup: function () {
+                    if (/^\d{3}$/.exec($('#code1').val())) {
+                        $('#code2').focus();
+                    }
+                }
+            });
+            $("#code2").live({
+                keydown: function () {
+                    if (/^\d{3}$/.exec($('#code2').val())) {
+                        $('#code3').focus();
+                    }
+                }, keyup: function () {
+                    if (/^\d{3}$/.exec($('#code1').val())) {
+                        $('#code2').focus();
+                    }
+                }
+            });
+        });
+
+        function getRnds() {
+            $("#vCode1").attr("src", "randcode.jpg?name=v1&id=" + ((new Date().getTime()).toString(36)));
+            $("#vCode2").attr("src", "randcode.jpg?name=v2&id=" + ((new Date().getTime() + 10).toString(36)));
+            $("#vCode3").attr("src", "randcode.jpg?name=v3&id=" + ((new Date().getTime() + 20).toString(36)));
+        }
+
+        function closeLoad() {
+            $("#userAccount").val("");
+            $("#userPassword").val("");
+            $("#code1").val("");
+            $("#code2").val("");
+            $("#code3").val("");
+            $("#key").val("");
+            document.getElementById("FId").style.display = "none";
+            document.getElementById("VId").className = "none";
+        }
+
+        //function
+        function popRndMenu() {
+            var pass = $('#userPassword').val();
+            if (pass == "") {
+                alert("您还未输入密码，请填写正确的密码后登录！");
+                return;
+            }
+            if (!/^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*,.]+$)(?![a-zA-z\d]+$)(?![a-zA-z!@#$%^&*,.]+$)(?![\d!@#$%^&*,.]+$)[a-zA-Z\d!@#$%^&*,.]+$/.exec(pass) || pass.length < 8) {
+                art.dialog({
+                    id: "_index_passcheck",
+                    title: "弱口令提示",
+                    content: '<div class=\"floatArtDialog\"><div class=\"artPbox\">系统检测出您在用户登录时输入的密码强度过低，为了保护您的账号安全，请登录国铁采购平台重置密码后，再尝试登录本系统。</div></div>',
+                    button:
+                        [{
+                            name: "确认修改",
+                            callback:
+                                function () {
+                                    return window.location.href = "https://cg.95306.cn/passport/forgetpwd";
+                                }
+                        },
+                            {
+                                name: "继续登录",
+                                callback: function () {
+                                    if (!isloadUser($('#userAccount').val(), '用户名', 'userAccount')) {
+                                    } else {
+                                        showPopMenu("使用随机码登录",
+                                            "<div class=\"floatArtDialog\"><div class=\"login\">验证码：<input type=\"text\" name=\"code1\" id=\"code1\" class=\"input52\" maxlength=\"3\"/><input type=\"text\" name=\"code2\" id=\"code2\" class=\"input52\" maxlength=\"3\"/><input type=\"text\" name=\"code3\" id=\"code3\" class=\"input52\" maxlength=\"3\"/></div><div class=\"artImgBox\" ><img id=\"vCode1\" name=\"vCode1\" src=\"/randcode.jpg?name=v1&id=" + ((new Date().getTime() + 1).toString(36)) + "\"/><img id=\"vCode2\" name=\"vCode2\" src=\"/randcode.jpg?name=v2&id=" + ((new Date().getTime() + 10).toString(36)) + "\"/><img id=\"vCode3\" name=\"vCode3\" src=\"/randcode.jpg?name=v3&id=" + ((new Date().getTime() + 20).toString(36)) + "\"/><a href=\"javascript:getRnds();\" id=\"codeD\">看不清，换一张</a></div><div class=\"artPbox\">提示：请根据图片提示的坐标值输入电子口令卡上对应的数字。</div></div>"
+                                            , true);
+                                    }
+                                }
+                            },
+                            {
+                                name: "重新输入",
+                                callback: function () {
+                                    $("#userPassword").val("");
+                                }
+                            }]
+                });
+            } else {
+                if (!isloadUser($('#userAccount').val(), '用户名', 'userAccount')) {
+                } else {
+                    showPopMenu("使用随机码登录",
+                        "<div class=\"floatArtDialog\"><div class=\"login\">验证码：<input type=\"text\" name=\"code1\" id=\"code1\" class=\"input52\" maxlength=\"3\"/><input type=\"text\" name=\"code2\" id=\"code2\" class=\"input52\" maxlength=\"3\"/><input type=\"text\" name=\"code3\" id=\"code3\" class=\"input52\" maxlength=\"3\"/></div><div class=\"artImgBox\" ><img id=\"vCode1\" name=\"vCode1\" src=\"/randcode.jpg?name=v1&id=" + ((new Date().getTime() + 1).toString(36)) + "\"/><img id=\"vCode2\" name=\"vCode2\" src=\"/randcode.jpg?name=v2&id=" + ((new Date().getTime() + 10).toString(36)) + "\"/><img id=\"vCode3\" name=\"vCode3\" src=\"/randcode.jpg?name=v3&id=" + ((new Date().getTime() + 20).toString(36)) + "\"/><a href=\"javascript:getRnds();\" id=\"codeD\">看不清，换一张</a></div><div class=\"artPbox\">提示：请根据图片提示的坐标值输入电子口令卡上对应的数字。</div></div>"
+                        , true);
+                }
+            }
+        }
+
+        function showPopMenu(v_title, v_contents, b_show, v_id) {
+            var strContent = v_contents || "";
+            var strId = v_id || "_index_pop";
+            art.dialog({
+                id: strId,
+                title: v_title,
+                lock: true,
+                fixed: true,
+                background: '#666', // 背景色
+                opacity: 0.87,	// 透明度
+                resize: false,
+                show: false,
+                cancel: true,
+                button: {
+                    name: "确认", disable: false, callback: function () {
+                        return loadRnd();
+                    }
+                }
+            });
+            if (strContent != "") {
+                art.dialog({id: strId}).content(v_contents);
+            }
+            if (b_show || false) {
+                art.dialog({id: strId}).position(($(document).width() / 2 > 180) ? $(document).width() / 2 - 180 : 0, 200).show();
+            }
+        }
+
+        function orderMsg() {
+            art.dialog({
+                id: 'testID',
+                content: '使用订单管管理需要登录系统，在使用前建议查看“操作手册”',
+                button: [
+                    {
+                        name: '操作手册',
+                        callback: function () {
+                            window.open("/myorder/help.do", "order_help");
+
+                            return false;
+                        },
+                        focus: true
+                    },
+                    {
+                        name: '订单管理',
+                        callback: function () {
+                            if ('' == '') {
+                                this.content('尚未登录，请登录后操作;如已登录，请刷新后尝试!');
+                                return false;
+                            } else {
+                                window.open("/myorder/main.do?method=who", "order_search");
+                            }
+
+                        }
+                    }
+
+
+                ]
+            });
+        }
+
+
+    </script>
+    <object id="CSCertHandle" CLASSID="CLSID:3AF49DF4-2FF0-417C-931C-97B8BF40FECE" width="0" height="0"
+            codebase="wzptKey/CSCert.cab#version=1.0"></object>
+</head>
+<body>
+<!--============ login ===============-->
+<div class="loginInfoDiv">
+
+    <input type="hidden" name="saltValue" id="saltValue" value="15c6a8db-6117-476e-a8a3-5529577626af"/>
+    <form method="post" name="userform" target="_top">
+        <input type="hidden" name="rndCode" id="rndCode"/>
+        <input id="userSession" name="userSession" type="hidden"
+               value="C6Zw7H529DZrstM871Vi7tz83UHp9zM0DgNAXoM5oM5Nosxdm7A3!870165542!1612507283062"/>
+        <div class="user" style="width:12%;"><input type="text" class="inputStyle1" id="userAccount" name="userAccount"
+                                                    maxlength="20" style="float:left;width:97px;"/></div>
+        <div class="password"><input id="userPassword" name="userPassword" type="password" class="inputStyle1"/></div>
+        <input id="keyValue" name="keyValue" type="hidden"/>
+        <input id="captchaCode" name="captchaCode" type="hidden"/>
+        <select class="selectStyle" id="userLoadStyle">
+            <option value="2">随机码登录</option>
+            <option value="1">证书登录</option>
+            <option value="0">普通登录</option>
+        </select>
+        <div class="loginBtn"><a href="javascript:void(null);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        </div> <!--========= 登陆按钮 ===============-->
+        <div class="LBox" id="LBox">
+            <a href="#" onclick="return false;" id="userSafeHelp">&nbsp;&nbsp;安全设置</a>
+            <ul class="level2" id="level2Id">
+                <li><a href="jsp/supplier/Get_Back_Password_Question.jsp" target="_blank">找回密码</a></li>
+                <li><a href="jsp/rand/verificationCode.jsp" target="_blank">申请挂失随机码</a></li>
+                <li><a href="jsp/rand/applyBindRand.jsp" target="_blank">申请绑定随机码</a></li>
+            </ul>
+        </div>
+    </form>
+
+
+    <div class="timePosition" id="jnkc"></div>
+    <div class="guide_PolicyPosition">
+
+        <a href="webGuide.do" target="_blank">网页向导</a>&nbsp;|&nbsp;&nbsp;
+        <a href="#">政策法规</a>
+
+    </div>
+</div>
+<!--============ flash ===============-->
+<div class="logoFlashInfoDiv">
+    <img src="image/main_public/logo_default.png" alt="logo"/>
+    <EMBED pluginspage="http://www.macromedia.com/go/getflashplayer" src="image/main_public/logo_zz_new.swf"
+           width="500px" height="54px" type="application/x-shockwave-flash" wmode="transparent" quality="high"></EMBED>
+</div>
+<!--============ menu ===============-->
+<div class="navcontainer">
+    <div class="globalnav">
+        <ul>
+            <li class="mouseDownSubMenubg">首页</li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=12" target="_blank">公 示</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=13" target="_blank">需求信息</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=1" target="_blank">招 标</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=2" target="_blank">竞 买</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=3" target="_blank">集中竞价</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=5" target="_blank">竞 卖</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=6" target="_blank">供应商管理</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="loadMenu.do?modelNo=11" target="_blank">市场资讯</a></li>
+            <li class="septallineStyle"></li>
+            <li><a href="webGuide.do" target="_blank">用户指南</a></li>
+
+            <li class="septallineStyle"></li>
+            <li style="cursor: pointer;"><a onclick="orderMsg();">订单管理</a></li>
+
+        </ul>
+    </div>
+</div>
+<div class="frameStyle">
+
+    <div class="leftFrame">
+        <a href="https://cg.95306.cn/" target="_blank">
+            <div class="newUserFrame"></div>
+        </a>
+        <!--====== 新闻中心 =======-->
+        <table class="newsFrame">
+            <tr>
+                <td class="topLeft"></td>
+                <td class="top"></td>
+                <td class="topRight"></td>
+            </tr>
+            <tr>
+                <td class="left"></td>
+                <td class="content">
+                    <div class="newsImgFlash_km">
+                        <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
+                                codebase="images/flash/swflash.cab#version=9,0,0,0" width="240" height="200">
+                            <param name="movie" value="images/flash/bcastr3.swf"/>
+                            <param name="quality" value="high"/>
+                            <param name="menu" value="false"/>
+                            <param name=wmode value="opaque"/>
+                            <param name="color" value="blue"/>
+                            <param name="FlashVars"
+                                   value="bcastr_file=images/flash/tlhc.jpg|images/flash/hxh.jpg|images/flash/img2.jpg|images/flash/img3.jpg|images/flash/yyxt.jpg&bcastr_link=images/flash/tlhc.jpg|images/flash/hxh.jpg|images/flash/img2.jpg|images/flash/img3.jpg|images/flash/yyxt.jpg&bcastr_title=lcb|qx|zz|gzl|nc&bcastr_config=0xffffff:文字颜色|0:文字位置|0xCDB7B5:文字背景颜色|60:文字背景透明度|0xffffff:按键文字颜色|0xDC143C:按键默认颜色|0x000033:按键当前颜色|8:自动播放时间(秒)|2:图片过渡效果|1:是否显示按钮|_blank:打开窗口"/>
+                            <EMBED pluginspage="http://www.macromedia.com/go/getflashplayer"
+                                   src="images/flash/bcastr3.swf"
+                                   FlashVars="bcastr_file=images/flash/tlhc.jpg|images/flash/hxh.jpg|images/flash/img2.jpg|images/flash/img3.jpg|images/flash/yyxt.jpg&bcastr_link=images/flash/tlhc.jpg|images/flash/hxh.jpg|images/flash/img2.jpg|images/flash/img3.jpg|images/flash/yyxt.jpg&bcastr_title=lcb|qx|zz|gzl|nc&bcastr_config=0xffffff:文字颜色|0:文字位置|0xCDB7B5:文字背景颜色|60:文字背景透明度|0xffffff:按键文字颜色|0xDC143C:按键默认颜色|0x000033:按键当前颜色|8:自动播放时间(秒)|2:图片过渡效果|1:是否显示按钮|_blank:打开窗口"
+                                   width="240" height="200" type="application/x-shockwave-flash" wmode="transparent"
+                                   quality="high"></EMBED>
+                        </object>
+                    </div>
+                </td>
+                <td class="right"></td>
+            </tr>
+            <tr>
+                <td class="bottomLeft"></td>
+                <td class="bottom"></td>
+                <td class="bottomRight"></td>
+            </tr>
+        </table>
+        <!--====== 政策法规======-->
+        <div class="leftcontent_km">
+            <div class="ruleTlt"><b>政策法规</b><a href="/webGuide.do?guideNum=1">more</a></div>
+            <div class="septalRedLine"></div>
+            <div class="menu">
+                <ul>
+                    <li><a href="downloadFile.do?method=main&fUploadType=1&fileName=OF002016062700155868"
+                           title="郑州局集团公司关于物资采购异议受理有关事项的通知">1、郑州局集团公司关于物资采购异议受理有关事项的通知</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--====== 帮助中心 =======-->
+        <div class="leftcontent">
+            <div class="helpTlt"><b>帮助中心</b><a href="/webGuide.do?guideNum=2">more</a></div>
+            <div class="septalRedLine"></div>
+            <div class="menu">
+                <ul>
+                    <li><a href="jsp/web_guide/blueKeyTips.jsp" title="第二代【蓝色】数字证书使用说明" target="_blank">1、第二代【蓝色】数字证书使用说明</a>
+                    </li>
+                    <li><a href="jsp/web_guide/win7_refused.jsp" title="WIN7操作系统证书访问被拒绝" target="_blank">2、WIN7操作系统证书访问被拒绝</a>
+                    </li>
+                    <li><a href="jsp/web_guide/supplierPicQ.jsp" title="供应商上传资质图片相关问题"
+                           target="_blank">3、供应商上传资质图片相关问题</a></li>
+                    <li><a href="jsp/web_guide/randCodeLogin.jsp" title="随机码登录相关问题" target="_blank">4、随机码登录相关问题</a></li>
+
+                    <li><a href="jsp/web_guide/sh201704jsbz.jsp" title="物资技术标准信息库" target="_blank">5、物资技术标准信息库</a></li>
+                </ul>
+            </div>
+        </div>
+        <!--====== 下载中心 =======-->
+        <div class="leftcontent">
+            <div class="loadTlt"><b>下载中心</b><a href="/webGuide.do?guideNum=3">more</a></div>
+            <div class="septalRedLine"></div>
+            <div class="menu">
+                <ul>
+                    <li><a href="downloadFile.do?method=main&fileName=OF002016080500165652"
+                           title="供应商综合信息登记表（供应商集中审核专用）">1、供应商综合信息登记表（供应商集中审核专用）</a></li>
+                    <li><a href="downloadFile.do?method=main&fileName=OF002016042200127807" title="供应商注册使用必读">2、供应商注册使用必读</a>
+                    </li>
+                    <li><a href="downloadFile.do?method=main&fileName=OF002016042200127806" title="供应商注册及随机码登录操作说明">3、供应商注册及随机码登录操作说明</a>
+                    </li>
+                    <li><a href="downloadFile.do?method=main&fileName=OF002016042200127805" title="竞买、竞卖用户使用手册">4、竞买、竞卖用户使用手册</a>
+                    </li>
+                    <li><a href="downloadFile.do?method=main&fileName=OF002016042200127804" title="集中竞价供应商用户手册">5、集中竞价供应商用户手册</a>
+                    </li>
+                    <li><a href="downloadFile.do?method=main&fileName=OF002016042200127803"
+                           title="竞卖重点操作提示">6、竞卖重点操作提示</a></li>
+                    <li><a href="downloadFile.do?method=main&fileName=201110111413000001"
+                           title="系统信息清除工具">7、系统信息清除工具</a></li>
+                    <li><a href="downloadFile.do?method=main&fileName=201110111415000002" title="物资采购平台蓝色数字证书驱动">8、物资采购平台蓝色数字证书驱动</a>
+                    </li>
+                    <li><a href="downloadFile.do?method=main&fileName=201110111416000003" title="物资采购平台黑色数字证书驱动">9、物资采购平台黑色数字证书驱动</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!--====== 市场资讯 =======-->
+        <div class="leftcontent_km">
+            <div class="staticsTlt"><b>市场资讯</b><a href="/marketConsulationList.do?method=indexList">more</a></div>
+            <div class="septalRedLine"></div>
+            <div class="menu">
+                <ul>
+                    <li><a href="#">暂无信息</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="middleFrame">
+        <!--====== 搜索 =======-->
+        <form name='indexSearch' id='form_ss' method='post' target='_blank' action="indexSearch.do">
+            <table class="searchFrame">
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="searchTlt"></div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="topLeft"></td>
+                    <td class="top"></td>
+                    <td class="topRight"></td>
+                </tr>
+                <tr>
+                    <td class="left"></td>
+                    <td class="content">
+                        <input type="text" name="keyword" id="keyword" class="searchInput" maxlength="30" value='请输入关键字'
+                               onfocus="erase(this);"/>
+                        <div class="searchBtn" onclick='tj();'></div>
+                        <div class="hotkey">热词搜索：<a href="indexSearch.do?keyword=%E5%85%AC%E5%91%8A" title="公告"
+                                                    target="_blank">公告</a>|<a
+                                href="indexSearch.do?keyword=%E5%B7%A5%E7%A8%8B" title="工程" target="_blank">工程</a>|<a
+                                href="indexSearch.do?keyword=%E6%8B%9B%E6%A0%87" title="招标" target="_blank">招标</a>|<a
+                                href="indexSearch.do?keyword=%E8%8C%83%E6%96%87" title="范文" target="_blank">范文</a>|<a
+                                href="indexSearch.do?keyword=%E8%8C%83%E6%9C%AC" title="范本" target="_blank">范本</a></div>
+                    </td>
+                    <td class="right"></td>
+                </tr>
+                <tr>
+                    <td class="bottomLeft"></td>
+                    <td class="bottom"></td>
+                    <td class="bottomRight"></td>
+                </tr>
+            </table>
+        </form>
+        <!--====== 需求信息 =======-->
+
+        <div class="middlecontent">
+            <div class="tltbg">
+                <div class="header"><b>需求信息</b></div>
+                <div class="secondSubMenuActive" onmouseover="browerNoticeList(this,'ListPub','1');"><a
+                        href="mainPageNoticeList.do?method=init&id=0000001" target="_blank">需求信息</a></div>
+            </div>
+            <div class="contentInfo" id="ListPub1">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002017030700228100%40OF002017030700228101%40c0"
+                               class="fl" title="郑州铁路局郑州工务机械段“郑工械段大机配件询20170306”" target="_blank">[需求信息][线下]郑州铁路局郑州工务机械段“郑工械段大机配件询20170306”</a><a
+                                class="fr">17-03-07</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002016012700121077%40OF002016012700121078%40c0"
+                               class="fl" title="测试0127需求信息" target="_blank">[需求信息][线下]测试0127需求信息</a><a class="fr">16-01-27</a><a
+                                class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002015112400116483%40OF002015112400116484%40c0"
+                               class="fl" title="关于公布铁道车辆用合成闸片（客车） 需求信息的通知" target="_blank">[需求信息][线下]关于公布铁道车辆用合成闸片（客车）
+                            需求信息的通知</a><a class="fr">15-11-24</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=0000001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+        </div>
+
+        <!--====== 采购公告 =======-->
+        <div class="middlecontent">
+            <div class="tltbg">
+                <div class="header"><b>采购公告</b></div>
+
+                <div class="secondSubMenu" onmouseover="browerNoticeList(this,'ListOne','3');"><a
+                        href="mainPageNoticeList.do?method=init&id=1400001" target="_blank">补遗公告</a></div>
+                <div class="secondSubMenu" onmouseover="browerNoticeList(this,'ListOne','2');"><a
+                        href="mainPageNoticeList.do?method=init&id=1300001" target="_blank">变更公告</a></div>
+                <div class="secondSubMenuActive" onmouseover="browerNoticeList(this,'ListOne','1');"><a
+                        href="mainPageNoticeList.do?method=init&id=1000001" target="_blank">项目公告</a></div>
+
+
+            </div>
+            <div class="contentInfo" id="ListOne1">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040800685472%40OF002020011000673158%4010"
+                               class="fl" title="中国铁路郑州局集团有限公司“车间班组基础工作管理系统设备购置”项目招标采购二次公告" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“车间班组基础工作管理系统设备购置”项目招标采购二次公告</a><a
+                                class="fr">20-04-08</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020031900061312%40IF002020031900061313%4010"
+                               class="fl" title="中国铁路郑州局集团有限公司郑州桥工段2020-4 “步行板用防护型钢丝网”项目询价公告" target="_blank">[招标][线下]中国铁路郑州局集团有限公司郑州桥工段2020-4
+                            “步行板用防护型钢丝网”项目询价公告</a><a class="fr">20-03-19</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020031200061299%40IF002020031200061300%4010"
+                               class="fl" title="中国铁路郑州局集团有限公司郑州桥工段杂备品类定点采购招标公告" target="_blank">[招标][线下]中国铁路郑州局集团有限公司郑州桥工段杂备品类定点采购招标公告</a><a
+                                class="fr">20-03-12</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020031200677310%40OF002020031200677311%4010"
+                               class="fl" title="商丘车站安检设备维保项目招标公告" target="_blank">[招标][线下]商丘车站安检设备维保项目招标公告</a><a
+                                class="fr">20-03-12</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020031100677266%40OF002020030400674736%4010"
+                               class="fl" title="郑州北车站2020无线采集调车监听配件采购项目招标二次公告" target="_blank">[招标][线下]郑州北车站2020无线采集调车监听配件采购项目招标二次公告</a><a
+                                class="fr">20-03-11</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020031100677268%40OF002020030200674634%4010"
+                               class="fl" title="郑州北车站2020无线平调设备ZT-D配件采购项目招标二次公告" target="_blank">[招标][线下]郑州北车站2020无线平调设备ZT-D配件采购项目招标二次公告</a><a
+                                class="fr">20-03-11</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020031100677270%40OF002020030200674631%4010"
+                               class="fl" title="郑州北车站2020年无线平调设备HT-S配件采购项目招标二次公告" target="_blank">[招标][线下]郑州北车站2020年无线平调设备HT-S配件采购项目招标二次公告</a><a
+                                class="fr">20-03-11</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=1000001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+            <div class="contentInfo none" id="ListOne2">
+
+            </div>
+            <div class="contentInfo none" id="ListOne3">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020033000682848%40OF002020012000673886%4014"
+                               class="fl" title="中国铁路郑州局集团有限公司“2020年郑州供电段标志牌”采购（12001004）项目补遗公告" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“2020年郑州供电段标志牌”采购（12001004）项目补遗公告</a><a
+                                class="fr">20-03-30</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020011700673791%40OF002020010900673140%4014"
+                               class="fl" title="中国铁路郑州局集团有限公司&#34;2020年郑州客运段高铁小食品饮品&#34;采购（12001002）补遗公告"
+                               target="_blank">[招标][线下]中国铁路郑州局集团有限公司&#34;2020年郑州客运段高铁小食品饮品&#34;采购（12001002）补遗公告</a><a
+                                class="fr">20-01-17</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020011500673480%40OF002019122000665630%4014"
+                               class="fl" title="中国铁路郑州局集团有限公司“2020年郑州动车段受电弓捆绑器”采购（11912030）项目补遗公告" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“2020年郑州动车段受电弓捆绑器”采购（11912030）项目补遗公告</a><a
+                                class="fr">20-01-15</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020011300673318%40OF002020010600672784%4014"
+                               class="fl" title="中国铁路郑州局集团有限公司“商合杭铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912046）补遗公告"
+                               target="_blank">[招标][线下]中国铁路郑州局集团有限公司“商合杭铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912046）补遗公告</a><a
+                                class="fr">20-01-13</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020011300673319%40OF002020010600672789%4014"
+                               class="fl" title="中国铁路郑州局集团有限公司“郑万铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912047）补遗公告"
+                               target="_blank">[招标][线下]中国铁路郑州局集团有限公司“郑万铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912047）补遗公告</a><a
+                                class="fr">20-01-13</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020010800673062%40OF002020010600672784%4014"
+                               class="fl" title="中国铁路郑州局集团有限公司“商合杭铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912046）补遗公告"
+                               target="_blank">[招标][线下]中国铁路郑州局集团有限公司“商合杭铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912046）补遗公告</a><a
+                                class="fr">20-01-08</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020010800673063%40OF002020010600672789%4014"
+                               class="fl" title="中国铁路郑州局集团有限公司“郑万铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912047）补遗公告"
+                               target="_blank">[招标][线下]中国铁路郑州局集团有限公司“郑万铁路河南段工务备品备件综合维修备品备件、仪器仪表”采购（11912047）补遗公告</a><a
+                                class="fr">20-01-08</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=1400001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+
+        </div>
+        <!--====== 公示 =======-->
+        <div class="middlecontent">
+            <div class="tltbg">
+                <div class="header"><b>公示</b></div>
+                <div class="secondSubMenuActive" onmouseover="browerNoticeList(this,'ListPubc','1');"><a
+                        href="mainPageNoticeList.do?method=init&id=7000001" target="_blank">公示</a></div>
+            </div>
+            <div class="contentInfo" id="ListPubc1">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020072200733050%40OF002020072200733051%40a0"
+                               class="fl" title="郑州铁路物资有限公司关于“2020年报废设备（郑州地区）”网上竞卖结果补遗公告" target="_blank">[审前公示][线下]郑州铁路物资有限公司关于“2020年报废设备（郑州地区）”网上竞卖结果补遗公告</a><a
+                                class="fr">20-07-22</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020041300687021%40OF002020041300687022%40b0"
+                               class="fl" title="郑州中原铁道国际旅行社有限公司郑州东高铁站商务贵宾厅安检业务外包项目中标公告" target="_blank">[采购公示][线下]郑州中原铁道国际旅行社有限公司郑州东高铁站商务贵宾厅安检业务外包项目中标公告</a><a
+                                class="fr">20-04-13</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040900685899%40OF002020040900685900%40b0"
+                               class="fl" title="郑州车站行包装卸业务外包招标评标结果公示"
+                               target="_blank">[采购公示][线下]郑州车站行包装卸业务外包招标评标结果公示</a><a class="fr">20-04-09</a><a
+                                class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040300684595%40OF002020040300684596%40b0"
+                               class="fl" title="郑州车务段印刷品制作询价结果公示" target="_blank">[采购公示][线下]郑州车务段印刷品制作询价结果公示</a><a
+                                class="fr">20-04-03</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040300684597%40OF002020040300684598%40b0"
+                               class="fl" title="南阳车务段南阳车务段中标结果公示" target="_blank">[采购公示][线下]南阳车务段南阳车务段中标结果公示</a><a
+                                class="fr">20-04-03</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040200684574%40OF002020040200684575%40b0"
+                               class="fl" title="中国铁路郑州局集团有限公司“2020年数据处理中心IBM780主机系统维保”项目评审结果公示" target="_blank">[采购公示][线下]中国铁路郑州局集团有限公司“2020年数据处理中心IBM780主机系统维保”项目评审结果公示</a><a
+                                class="fr">20-04-02</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020032700682516%40OF002020032700682517%40b0"
+                               class="fl" title="中国铁路郑州局集团有限公司“&#39;云学习系统&#39;电子证书模块升级及年度维保”项目评审结果公示" target="_blank">[采购公示][线下]中国铁路郑州局集团有限公司“&#39;云学习系统&#39;电子证书模块升级及年度维保”项目评审结果公示</a><a
+                                class="fr">20-03-27</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=7000001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+        </div>
+        <!--====== 采购结果 =======-->
+        <div class="middlecontent">
+            <div class="tltbg">
+                <div class="header"><b>采购结果</b></div>
+                <div class="secondSubMenu" onmouseover="browerNoticeList(this,'ListTwo','2');"><a
+                        href="mainPageNoticeList.do?method=init&id=1600001" target="_blank">废标公告</a></div>
+                <div class="secondSubMenuActive" onmouseover="browerNoticeList(this,'ListTwo','1');"><a
+                        href="mainPageNoticeList.do?method=init&id=1200001" target="_blank">中标公告</a></div>
+            </div>
+            <div class="contentInfo" id="ListTwo1">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020042900061354%40IF002020010600060980%4012"
+                               class="fl" title="中国铁路郑州局集团有限公司焦作车辆段“食堂食材加工”采购项目中标结果公告" target="_blank">[招标][线下]中国铁路郑州局集团有限公司焦作车辆段“食堂食材加工”采购项目中标结果公告</a><a
+                                class="fr">20-04-29</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020042300692218%40OF002020011000673158%4012"
+                               class="fl" title="中国铁路郑州局集团有限公司“车间班组基础工作管理系统设备购置”项目评审结果公示" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“车间班组基础工作管理系统设备购置”项目评审结果公示</a><a
+                                class="fr">20-04-23</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020041600687654%40OF002019123100669104%4012"
+                               class="fl" title="中国铁路郑州局集团有限公司“郑州机务段（北检修）物料、工具一体化配送系统设备购置”项目评审结果公示" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“郑州机务段（北检修）物料、工具一体化配送系统设备购置”项目评审结果公示</a><a
+                                class="fr">20-04-16</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020041400687140%40OF002019122000665630%4012"
+                               class="fl" title="中国铁路郑州局集团有限公司“2020年郑州动车段受电弓捆绑器”采购(11912030)评审结果公示" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“2020年郑州动车段受电弓捆绑器”采购(11912030)评审结果公示</a><a
+                                class="fr">20-04-14</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020041000686575%40OF002020011300673192%4012"
+                               class="fl" title="新建太原至焦作铁路（河南段）建管甲供物资声屏障采购招标中标候选人公示" target="_blank">[招标][线下]新建太原至焦作铁路（河南段）建管甲供物资声屏障采购招标中标候选人公示</a><a
+                                class="fr">20-04-10</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040900685875%40OF002020011600673720%4012"
+                               class="fl" title="中国铁路郑州局集团有限公司“郑阜铁路河南段工务备品备件郑阜维修工机具、探伤仪”采购（11912048）评审结果公示"
+                               target="_blank">[招标][线下]中国铁路郑州局集团有限公司“郑阜铁路河南段工务备品备件郑阜维修工机具、探伤仪”采购（11912048）评审结果公示</a><a
+                                class="fr">20-04-09</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040800685594%40OF002020010300672672%4012"
+                               class="fl" title="中国铁路郑州局集团有限公司“周口东存车场移动式卸污车(3M3)”项目评审结果公示" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“周口东存车场移动式卸污车(3M3)”项目评审结果公示</a><a
+                                class="fr">20-04-08</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=1200001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+            <div class="contentInfo none" id="ListTwo2">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020041400687194%40OF002020010900673132%4016"
+                               class="fl" title="中国铁路郑州局集团有限公司“2020年长治北车站装载机、抑尘汽车配送柴油”采购（11912045）项目终止公告"
+                               target="_blank">[招标][线下]中国铁路郑州局集团有限公司“2020年长治北车站装载机、抑尘汽车配送柴油”采购（11912045）项目终止公告</a><a
+                                class="fr">20-04-14</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020040800685462%40OF002019121200655674%4016"
+                               class="fl" title="中国铁路郑州局集团有限公司“高铁备品备件（变电专业-仪器仪表）”采购（11912010）项目终止公告" target="_blank">[招标][线下]中国铁路郑州局集团有限公司“高铁备品备件（变电专业-仪器仪表）”采购（11912010）项目终止公告</a><a
+                                class="fr">20-04-08</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020031300677485%40OF002020031100676954%4016"
+                               class="fl" title="长治北车站关于对“长治北车站公务用车定点加油采购”招标项目终止的公告" target="_blank">[招标][线下]长治北车站关于对“长治北车站公务用车定点加油采购”招标项目终止的公告</a><a
+                                class="fr">20-03-13</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020030200061237%40IF002020022700061222%4016"
+                               class="fl" title="新乡供电段“长垣配电所东自闭线路迁移改造电缆”询价采购项目的撤销公告" target="_blank">[招标][线下]新乡供电段“长垣配电所东自闭线路迁移改造电缆”询价采购项目的撤销公告</a><a
+                                class="fr">20-03-03</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020022600061210%40IF002020022400061190%4016"
+                               class="fl" title="焦作车辆段“塑钢隔圈”询价采购项目的撤销公告"
+                               target="_blank">[招标][线下]焦作车辆段“塑钢隔圈”询价采购项目的撤销公告</a><a class="fr">20-02-26</a><a
+                                class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020022600061211%40IF002020022400061194%4016"
+                               class="fl" title="焦作车辆段“不锈钢球阀配件”询价采购项目的撤销公告" target="_blank">[招标][线下]焦作车辆段“不锈钢球阀配件”询价采购项目的撤销公告</a><a
+                                class="fr">20-02-26</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020022600061212%40IF002020022400061197%4016"
+                               class="fl" title="焦作车辆段“冲击座”询价采购项目的撤销公告"
+                               target="_blank">[招标][线下]焦作车辆段“冲击座”询价采购项目的撤销公告</a><a class="fr">20-02-26</a><a
+                                class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=1600001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+        </div>
+        <!--====== 销售公告 =======-->
+        <div class="middlecontent">
+            <div class="tltbg">
+                <div class="header"><b>销售公告</b></div>
+                <div class="secondSubMenu" onmouseover="browerNoticeList(this,'ListThree','3');"><a
+                        href="mainPageNoticeList.do?method=init&id=2400001" target="_blank">补遗公告</a></div>
+                <div class="secondSubMenu" onmouseover="browerNoticeList(this,'ListThree','2');"><a
+                        href="mainPageNoticeList.do?method=init&id=2300001" target="_blank">变更公告</a></div>
+                <div class="secondSubMenuActive" onmouseover="browerNoticeList(this,'ListThree','1');"><a
+                        href="mainPageNoticeList.do?method=init&id=2000001" target="_blank">项目公告</a></div>
+            </div>
+            <div class="contentInfo" id="ListThree1">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021012600790746%40OF002021012600790742%4030"
+                               class="fl" title="郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的项目公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的项目公告</a><a
+                                class="fr">21-01-26</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021012600790736%40OF002021012600790730%4030"
+                               class="fl" title="郑州铁路物资有限公司关于“2021年报废物资设备（郑州地区）”网上竞卖的项目公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2021年报废物资设备（郑州地区）”网上竞卖的项目公告</a><a
+                                class="fr">21-01-26</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021012600790741%40OF002021012600790737%4030"
+                               class="fl" title="郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的项目公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的项目公告</a><a
+                                class="fr">21-01-26</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021012600790728%40OF002021012600790729%4030"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废设备(新乡地区）”询价竞卖销售公告" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废设备(新乡地区）”询价竞卖销售公告</a><a
+                                class="fr">21-01-26</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021012600790726%40OF002021012600790727%4030"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售公告" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售公告</a><a
+                                class="fr">21-01-26</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021011500789933%40OF002021011500789934%4030"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废设备(新乡地区）”询价竞卖销售公告" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废设备(新乡地区）”询价竞卖销售公告</a><a
+                                class="fr">21-01-15</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021011500789931%40OF002021011500789932%4030"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售公告" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售公告</a><a
+                                class="fr">21-01-15</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=2000001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+            <div class="contentInfo none" id="ListThree2">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002019070800583871%40OF002019070200581482%4033"
+                               class="fl" title="郑州铁路局关于郑州铁路物资有限公司“2019年废轨（新乡地区）”网上竞卖的变更公告" target="_blank">[竞卖][正式]郑州铁路局关于郑州铁路物资有限公司“2019年废轨（新乡地区）”网上竞卖的变更公告</a><a
+                                class="fr">19-07-08</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002019070800583842%40OF002019070200581482%4033"
+                               class="fl" title="郑州铁路局关于郑州铁路物资有限公司“2019年废轨（新乡地区）”网上竞卖的变更公告" target="_blank">[竞卖][正式]郑州铁路局关于郑州铁路物资有限公司“2019年废轨（新乡地区）”网上竞卖的变更公告</a><a
+                                class="fr">19-07-08</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=2300001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+            <div class="contentInfo none" id="ListThree3">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020090900744349%40OF002020090400743635%4034"
+                               class="fl" title="竞卖项目终止公告" target="_blank">[竞卖][正式]竞卖项目终止公告</a><a
+                                class="fr">20-09-09</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020090900744334%40OF002020090700743965%4034"
+                               class="fl" title="郑物供询（废旧）2020-28询价竞卖销售补遗公告" target="_blank">[竞卖][线下]郑物供询（废旧）2020-28询价竞卖销售补遗公告</a><a
+                                class="fr">20-09-09</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020090900744333%40OF002020090700743958%4034"
+                               class="fl" title="郑物供询（废旧）2020-27询价竞卖销售补遗公告" target="_blank">[竞卖][线下]郑物供询（废旧）2020-27询价竞卖销售补遗公告</a><a
+                                class="fr">20-09-09</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020082100741197%40OF002020081700740396%4034"
+                               class="fl" title="郑州铁路物资有限公司2020年货车废钢（郑州地区）”网上竞卖ZWJM-2020-56项目终止补遗公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司2020年货车废钢（郑州地区）”网上竞卖ZWJM-2020-56项目终止补遗公告</a><a
+                                class="fr">20-08-21</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020081400061418%40IF002020080600061402%4034"
+                               class="fl" title="中国铁路郑州局集团有限公司郑州桥工段ZQGD-BFWZ-2020-03报废水泥枕公开竞价终止公告" target="_blank">[竞卖][线下]中国铁路郑州局集团有限公司郑州桥工段ZQGD-BFWZ-2020-03报废水泥枕公开竞价终止公告</a><a
+                                class="fr">20-08-14</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020081100739179%40OF002020080400738938%4034"
+                               class="fl" title="郑州铁路物资有限公司“2020年报废设备（郑州地区）”询价竞卖销售终止公告" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2020年报废设备（郑州地区）”询价竞卖销售终止公告</a><a
+                                class="fr">20-08-11</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020070300724089%40OF002020070100723678%4034"
+                               class="fl" title="郑州铁路物资有限公司关于“2020年废钢轨（新乡地区）”网上竞卖的项目补遗公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2020年废钢轨（新乡地区）”网上竞卖的项目补遗公告</a><a
+                                class="fr">20-07-03</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=2400001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+        </div>
+        <!--====== 销售结果 =======-->
+        <div class="middlecontent">
+            <div class="tltbg">
+                <div class="header"><b>销售结果</b></div>
+                <div class="secondSubMenu" onmouseover="browerNoticeList(this,'ListFour','2');"><a
+                        href="mainPageNoticeList.do?method=init&id=2600001" target="_blank">废标公告</a></div>
+                <div class="secondSubMenuActive" onmouseover="browerNoticeList(this,'ListFour','1');"><a
+                        href="mainPageNoticeList.do?method=init&id=2200001" target="_blank">中标公告</a></div>
+            </div>
+            <div class="contentInfo" id="ListFour1">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021020500792322%40OF002021012600790742%4032"
+                               class="fl" title="郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的成交公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的成交公告</a><a
+                                class="fr">21-02-05</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021020500792319%40OF002021012600790737%4032"
+                               class="fl" title="郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的成交公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2021年报废设备（洛阳地区）”网上竞卖的成交公告</a><a
+                                class="fr">21-02-05</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021020500792316%40OF002021012600790730%4032"
+                               class="fl" title="郑州铁路物资有限公司关于“2021年报废物资设备（郑州地区）”网上竞卖的成交公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2021年报废物资设备（郑州地区）”网上竞卖的成交公告</a><a
+                                class="fr">21-02-05</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021020400791778%40OF002021012600790727%4032"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售结果公示" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售结果公示</a><a
+                                class="fr">21-02-04</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021020400791779%40OF002021012600790729%4032"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售结果公示" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售结果公示</a><a
+                                class="fr">21-02-04</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021012500790693%40OF002021011500789934%4032"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废物资（新乡地区）”询价竞卖销售结果公示" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废物资（新乡地区）”询价竞卖销售结果公示</a><a
+                                class="fr">21-01-25</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002021012500790692%40OF002021011500789932%4032"
+                               class="fl" title="郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售结果公示" target="_blank">[竞卖][线下]郑州铁路物资有限公司“2021年报废物资（郑州地区）”询价竞卖销售结果公示</a><a
+                                class="fr">21-01-25</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=2200001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+            <div class="contentInfo none" id="ListFour2">
+                <div class="content">
+                    <ul>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002020082700743045%40OF002020081700740396%4036"
+                               class="fl" title="郑州铁路物资有限公司关于“2020年货车废钢（郑州地区）”网上竞卖的作废公告" target="_blank">[竞卖][正式]郑州铁路物资有限公司关于“2020年货车废钢（郑州地区）”网上竞卖的作废公告</a><a
+                                class="fr">20-08-27</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002020010600060961%40IF002019121200060209%4036"
+                               class="fl" title="焦作车辆段询价竞卖废标公告" target="_blank">[竞卖][线下]焦作车辆段询价竞卖废标公告</a><a class="fr">20-01-06</a><a
+                                class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002019101800628384%40OF002019101100624487%4036"
+                               class="fl" title="郑州铁路局关于郑州铁路物资有限公司“2019年废枕木（郑州地区）”网上竞卖的作废公告" target="_blank">[竞卖][正式]郑州铁路局关于郑州铁路物资有限公司“2019年废枕木（郑州地区）”网上竞卖的作废公告</a><a
+                                class="fr">19-10-18</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002019101100624480%40OF002019092500614062%4036"
+                               class="fl" title="郑州铁路局关于郑州铁路物资有限公司“2019年废枕木（郑州地区）”网上竞卖的作废公告" target="_blank">[竞卖][正式]郑州铁路局关于郑州铁路物资有限公司“2019年废枕木（郑州地区）”网上竞卖的作废公告</a><a
+                                class="fr">19-10-11</a><a class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002019091200611029%40OF002019090200608288%4036"
+                               class="fl" title="“洛阳机务段废油销售公告”项目招标结果公示"
+                               target="_blank">[竞卖][线下]“洛阳机务段废油销售公告”项目招标结果公示</a><a class="fr">19-09-12</a><a
+                                class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=OF002019091200611031%40OF002019082200605607%4036"
+                               class="fl" title="“洛阳机务段废油销售公告”项目招标结果公示"
+                               target="_blank">[竞卖][线下]“洛阳机务段废油销售公告”项目招标结果公示</a><a class="fr">19-09-12</a><a
+                                class="clear"></a></li>
+                        <li><a href="mainPageNotice.do?method=info&id=IF002019060500053726%40IF002019052200053317%4036"
+                               class="fl" title="新乡机务段“长治北生产区废油”询价销售结果公示" target="_blank">[竞卖][线下]新乡机务段“长治北生产区废油”询价销售结果公示</a><a
+                                class="fr">19-06-05</a><a class="clear"></a></li>
+                    </ul>
+                </div>
+                <div class="more"><a href="mainPageNoticeList.do?method=init&id=2600001" class="fr"
+                                     target="_blank">查看更多</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="rightFrame"><!--wzcgzs.95306.cn  -->
+        <!--====== 通知 =======-->
+        <div class="rightcontent_km">
+            <div class="tltbg">
+                <div class="header"><b>通知公告</b></div>
+                <div class="secondSubMenu"><a href="/information.do?method=more" target="_blank">more</a></div>
+                <div class="clear"></div>
+            </div>
+            <MARQUEE direction=up behavior=scroll scrollamount="2" onmouseover="this.stop()" onmouseout="this.start()">
+                <ul>
+                    <li><a href="mainInfomation.do?method=base&id=202002100000425" target="_blank"
+                           title="关于招标公告和中标结果公示信息发布平台迁移的通知">关于招标公告和中标结果公示信息发布平台迁移的通知【2020-02-10】</a></li>
+                    <li><a href="mainInfomation.do?method=base&id=201912190000405" target="_blank"
+                           title="郑州局集团公司关于调整变更物资供应商注册和信息审核工作的通知">郑州局集团公司关于调整变更物资供应商注册和信息审核工作的通知【2019-12-20】</a></li>
+                    <li><a href="mainInfomation.do?method=base&id=201807260000385" target="_blank"
+                           title="郑州局集团公司关于物资供应商注册信息审核相关工作的办理须知">郑州局集团公司关于物资供应商注册信息审核相关工作的办理须知【2019-07-04】</a></li>
+                    <li><a href="mainInfomation.do?method=base&id=201806120000365" target="_blank"
+                           title="“郑州铁路局关于2018年第一批报废机车竞卖的项目”的相关通知">“郑州铁路局关于2018年第一批报废机车竞卖的项目”的相关通知【2018-06-12】</a></li>
+                </ul>
+            </MARQUEE>
+        </div>
+        <!--====== 产品质量通报 =======-->
+        <!-- <div class="rightcontent" >
+            <div class="tltbg">
+                <div class="header"><b>产品质量通报</b></div>
+                <div class="secondSubMenu"><a href="jsp/zltb/zltb_more.jsp" target="_blank">more</a></div>
+                <div class="clear"></div>
+            </div>
+            <div class="listInfo">
+                <ul>
+                    <li><a href="jsp/zltb/201401.pdf" title="国家铁路局关于2013年监督抽查铁路产品质量情况通报2014 " target="_blank">国家铁路局关于2013年监督抽查铁路产品质量情况通报2014</a></li>
+                    <li><a href="jsp/zltb/201203.pdf" title="关于转发铁道部监督抽查铁路产品质量情况通报（2012年第3号）的通知 " target="_blank">关于转发铁道部监督抽查铁路产品质量情况通报（2012年第3号）的通知</a></li>
+                    <li><a href="jsp/zltb/201202.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2012年第2号]</a></li>
+                    <li><a href="jsp/zltb/201201.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2012年第1号]</a></li>
+                    <li><a href="jsp/zltb/201104.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2011年第4号]</a></li>
+                    <li><a href="jsp/zltb/201103.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2011年第3号]</a></li>
+                    <li><a href="jsp/zltb/201102.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2011年第2号]</a></li>
+                    <li><a href="jsp/zltb/201101.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2011年第1号]</a></li>
+                    <li><a href="jsp/zltb/201003.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2010年第3号]</a></li>
+                    <li><a href="jsp/zltb/201002.jsp" title="监督抽查铁路产品质量通报 " target="_blank">产品质量通报[2010年第2号]</a></li>
+                </ul>
+            </div>
+        </div> -->
+        <div class="rightcontent">
+            <div class="tltbg">
+                <div class="header"><b>产品质量通报</b></div>
+                <div class="secondSubMenu"><a href="/webGuide.do?guideNum=4" target="_blank">more</a></div>
+                <div class="clear"></div>
+            </div>
+            <div class="listInfo">
+
+            </div>
+        </div>
+        <!--====== 供应商不良记录 =======-->
+        <div class="rightcontent">
+            <div class="tltbg">
+                <div class="header"><b>供应商不良记录</b></div>
+                <div class="secondSubMenu"><a href="indexBadNotesList.do" target="_blank">more</a></div>
+                <div class="clear"></div>
+            </div>
+            <div class="listInfo">
+                <ul></ul>
+            </div>
+        </div>
+        <!--====== 联系方式 =======-->
+        <div class="contactFrame">
+            <div class="contectIcon"></div>
+            <div class="contactTlt"><b>联系方式</b></div>
+            <div class="both"></div>
+            <div class="contactList_km">
+                邮箱地址：<br/>ztwzwzc@126.com
+            </div>
+            <div class="clear"></div>
+        </div>
+        <!--====== 信访投诉 =======-->
+        <div class="circularFrame">
+            <div class="top"></div>
+            <div class="clear"></div>
+            <div class="mid">
+                <div class="phone"></div>
+                <div class="header"></div>
+                <div class="both"></div>
+                <div class="info">
+
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="btm"></div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <div class="fBox">
+        <div class="imgdiv"></div>
+        <div class="cBox">
+            <div class="link-box">
+                <a href="http://wzcgzs.95306.cn/mainPage.do" target="_blank">中国铁路总公司物资采购商务平台</a><a
+                    href="http://wz.harb.95306.cn" target="_blank">哈尔滨局集团公司物资采购商务平台</a><a
+                    href="http://wz.sheny.95306.cn" target="_blank">沈阳局集团公司物资采购商务平台</a><a href="http://wz.beij.95306.cn"
+                                                                                          target="_blank">北京局集团公司物资采购商务平台</a><a
+                    href="http://wz.taiy.95306.cn" target="_blank">太原局集团公司物资采购商务平台</a><a href="http://wz.huhht.95306.cn"
+                                                                                         target="_blank">呼和浩特局集团公司物资采购商务平台</a><a
+                    href="http://wz.wuh.95306.cn:7001" target="_blank">武汉局集团公司物资采购商务平台</a><a
+                    href="http://wz.xian.95306.cn" target="_blank">西安局集团公司物资采购商务平台</a><a
+                    href="http://wz.jin.95306.cn:7001" target="_blank">济南局集团公司物资采购商务平台</a><a
+                    href="http://wz.shangh.95306.cn/" target="_blank">上海局集团公司物资采购商务平台</a><a
+                    href="http://wz.nanch.95306.cn" target="_blank">南昌局集团公司物资采购商务平台</a><a
+                    href="http://wz.guangzh.95306.cn" target="_blank">广州局集团公司物资采购商务平台</a><a
+                    href="http://wz.nann.95306.cn" target="_blank">南宁局集团公司物资采购商务平台</a><a
+                    href="http://wz.chengd.95306.cn" target="_blank">成都局集团公司物资采购商务平台</a><a
+                    href="http://wz.kunm.95306.cn" target="_blank">昆明局集团公司物资采购商务平台</a><a href="http://wz.lanzh.95306.cn"
+                                                                                         target="_blank">兰州局集团公司物资采购商务平台</a><a
+                    href="http://wz.wulmq.95306.cn" target="_blank">乌鲁木齐局集团公司物资采购商务平台</a><a
+                    href="http://wz.qingz.95306.cn" target="_blank">青藏集团公司物资采购商务平台</a><a href="http://wz.th.95306.cn"
+                                                                                         target="_blank">中铁特货物资采购商务平台</a><a
+                    href="http://wz.jzx.95306.cn" target="_blank">中铁集装箱物资采购商务平台</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="frameStyle">
+    <div class="bottomFrame" style="height:auto;">
+        <div style="margin: 0 auto;width:250px;"></div>
+        <div class="abox"><a href="">关于我们</a>　｜　<a href="">网站声明</a>　｜　<a href="">网站地图</a>　｜　<a href="">联系我们</a>　｜　<a
+                href="">网站帮助</a></div>
+        <div class="bbox"><span>京ICP备15003716号-1 豫ICP备11015205号-1</span></div>
+    </div>
+</div>
+<!-- 更新日期：2018-09-06 -->
+</body>
+</html>

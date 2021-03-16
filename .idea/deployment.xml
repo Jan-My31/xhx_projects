@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="root@45.15.10.32:22">
+    <serverData>
+      <paths name="root@45.15.10.32:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/www/wwwroot/xhx_projects" local="$PROJECT_DIR$" web="http:///" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
